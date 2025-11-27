@@ -1,3 +1,4 @@
+import './style.css';
 export function initApp() {
   const input = document.getElementById('textInput');
   const button = document.getElementById('addButton');
