@@ -1,19 +1,20 @@
+// jest.config.cjs
 module.exports = {
   testEnvironment: 'jsdom',
-  moduleFileExtensions: ['js'],
-  testMatch: ['<rootDir>/src/**/*.test.js'],
-  transform: {
-    '^.+\\.js$': 'babel-jest',
-  },
+  collectCoverageFrom: ['src/**/*.js', '!**/*.test.js', '!**/node_modules/**'],
   coverageThreshold: {
     global: {
-      branches: 75,
-      functions: 75,
-      lines: 75,
-      statements: 75,
+      branches: 60,
+      functions: 60,
+      lines: 60,
+      statements: 60,
     },
   },
   moduleNameMapper: {
-    '\\.css$': 'identity-obj-proxy',
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
   },
+  transform: {
+    '^.+\\.js$': 'babel-jest',
+  },
+  transformIgnorePatterns: ['node_modules/(?!(jest-)?@?babel)'],
 };

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { initApp } from './script.js';
+const { initApp } = require('./script.js');
 
 function initDOM() {
   document.body.innerHTML = `

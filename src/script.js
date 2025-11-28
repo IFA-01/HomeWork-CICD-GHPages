@@ -1,5 +1,5 @@
-import './style.css';
-export function initApp() {
+require('./style.css');
+function initApp() {
   const input = document.getElementById('textInput');
   const button = document.getElementById('addButton');
   const block = document.querySelector('.div1');
@@ -45,3 +45,4 @@ export function initApp() {
   });
 }
 initApp();
+module.exports = { initApp };
