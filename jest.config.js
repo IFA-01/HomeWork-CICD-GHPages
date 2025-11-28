@@ -1,4 +1,3 @@
-// jest.config.cjs
 module.exports = {
   testEnvironment: 'jsdom',
   collectCoverageFrom: ['src/**/*.js', '!**/*.test.js', '!**/node_modules/**'],
