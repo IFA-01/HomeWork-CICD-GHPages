@@ -2,6 +2,7 @@
   "name": "homework-6-deploy",
   "version": "1.0.0",
   "description": "",
+  "homepage": "hhttps://ifa-01.github.io/HomeWork-CICD-GHPages/",
   "type": "commonjs",
   "main": "script.js",
   "scripts": {
