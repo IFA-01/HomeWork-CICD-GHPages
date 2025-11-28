@@ -1,37 +1,65 @@
-name: Deploy to GitHub Pages
+name: CI & Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
 
 jobs:
-  build-and-deploy:
+  ci:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '24'
-          cache: 'npm'
+          node-version: 24
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npx prettier --check .
 
       - name: Run tests
         run: npm run test:coverage
 
-      - name: Run lint
-        run: npm run lint
-
-      - name: Build project
+      - name: Build
         run: npm run build
 
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
+
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          commit_message: ${{ github.event.head_commit.message }}
+          allow_empty_commit: true
